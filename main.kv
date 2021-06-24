@@ -1,0 +1,690 @@
+	
+<Labell@Label>
+	markup: True
+    canvas.before:
+        Color:
+            rgba: 1,1,1,1
+        Rectangle:
+            size: self.size
+            pos: self.pos	
+
+<Buttonn@Button>
+	background_normal : ''
+	background_color: "0488D8"
+	padding: 5,5
+	markup: True
+<Labelcustom@GridLayout>:
+    # define the properties that appear in the data
+    text: ''
+    image: ''
+    cols: 3
+	size_hint:(1,1)
+	pos_hint: {'x':1,'y':0}
+    # define how the data is displayed
+    Labell: 
+    	text:""
+		size_hint:(0.05,1)
+		pos_hint: {'x':0,'y':0}
+    Image:
+        source: root.image
+        size_hint:(0.05,1)
+        pos_hint: {'x':0.05,'y':0}
+        canvas.before:
+	        Color:
+	            rgba: 1,1,1,1
+	        Rectangle:
+	            size: self.size
+	            pos: self.pos
+        
+    Label:
+    	size_hint:(0.7,1)
+    	pos_hint: {'x':0.3,'y':0.1}
+        text: root.text
+        markup: True
+        text_size:self.size
+		halign:'left'
+		valign:'middle'		
+	    canvas.before:
+	        Color:
+	            rgba: 1,1,1,1
+	        Rectangle:
+	            size: self.size
+	            pos: self.pos
+<RV@RecycleView>
+    viewclass: 'Labelcustom'
+    RecycleBoxLayout:
+    	spacing: 5
+    	
+        default_size: None, dp(56)
+        default_size_hint: 1, None
+        size_hint_y: None
+        height: self.minimum_height
+        orientation: 'vertical'
+
+<MainMenu>:
+	name: "menu"
+    size_hint: 1,1
+    pos_hint: {'x': 0, 'y': 0}	
+	CSpinnerBlue:
+		id:spinermenu
+		text:"Meniu" 
+		size_hint: 1, 0.08
+		pos_hint: {'x': 0, 'y': 0.8}
+		background_color: "0488D8"
+    	background_normal : ''
+    	color: 1,1,1,1
+    	text_size: self.size     
+		halign: 'center'
+		valign: "middle"
+		values: ["Curs Valutar arhivă - Grafice","Date IRCC - ROBOR","Info","Evaluează aplicația"]
+		on_text: root.gotocursarhiva() 
+		Image:
+			source: "drop.png"
+			y: self.parent.y*1.04
+    		x: self.parent.x
+    		allow_stretch: False
+    		size_hint:(None,None)
+    		size: spinermenu.width*1.8,spinermenu.height/7
+    BoxLayout:
+    	id: boxmmenu
+    	size_hint: 1,0.8
+    	pos_hint: {'x': 0, 'y': 0}	
+        orientation: "vertical"      
+        Label:
+        	id: labeltitlu1
+        	text: "Conversie valută"
+        	size_hint: 1,0.05
+    		pos_hint: {'x': 0, 'y': 0.95}
+    		color: 0,0,1,1
+    	GridLayout:
+        	cols:2
+        	rows:1
+        	size_hint: 1,0.1
+    		pos_hint: {'x': 0, 'y': 0.85}	
+        	padding:5
+			spacing:5
+			CSpinner:
+				size_hint: 0.5, 1
+				pos_hint: {'x': 0, 'y': 0}
+				background_color: "FFFFFF"
+	        	background_normal : ''
+	        	text_size: self.size     
+        		halign: 'center'
+        		valign: "bottom"
+				id: spiner1
+				text: "Euro"
+				values: ["Leu românesc","Euro","Dolarul american","Lira sterlină","Francul elveţian","Gramul de aur","Forint maghiar","Yen japonez","Leul moldovenesc","Coroana norvegiană","Zlotul polonez","Coroana suedeză","Noua lira turcească","DST","Rubla rusească","Leva bulgarească","Dolarul australian","Dolarul canadian","Coroana cehă","Coroana daneză","Lira egipteană","Randul sud-african","Realul brazilian","Renminbi-ul chinezesc","Rupia indiană","Won sud-corean","Peso-ul mexican","Dolarul neo-zeelandez","Dinarul sârbesc","Hryvna ucraineană","Dirhamul Emiratelor","Kuna croată","Bahtul thailandez"]
+				on_text:root.valuta(spiner1.text,input33.text)
+				Image:
+					source: root.steag.get(spiner1.text,"zron.png")
+					y: self.parent.y + self.parent.width*0.02
+            		x: self.parent.width*0.4
+            		allow_stretch: True
+            		size_hint:(None,None)
+            		size: spiner2.width/6,spiner2.height
+	    		Image:
+	    			source: "drop.png"
+					y: self.parent.y*1.04
+	        		x: self.parent.x 
+	        		allow_stretch: False
+	        		size_hint:(None,None)
+	        		size: spiner1.width*1.8,spiner1.height/7            		
+			CSpinner:
+				id:spiner2
+				text_size: self.size     
+        		halign: 'center'
+        		valign: "bottom"
+        		on_text:root.valuta(spiner1.text,input33.text)
+				size_hint: 0.5, 1
+				pos_hint: {'x': 0, 'y': 0.5}
+	        	background_color: "FFFFFF"
+	        	background_normal : ''				
+				text: "Leu românesc"
+				values: ["Leu românesc","Euro","Dolarul american","Lira sterlină","Francul elveţian","Gramul de aur","Forint maghiar","Yen japonez","Leul moldovenesc","Coroana norvegiană","Zlotul polonez","Coroana suedeză","Noua lira turcească","DST","Rubla rusească","Leva bulgarească","Dolarul australian","Dolarul canadian","Coroana cehă","Coroana daneză","Lira egipteană","Randul sud-african","Realul brazilian","Renminbi-ul chinezesc","Rupia indiană","Won sud-corean","Peso-ul mexican","Dolarul neo-zeelandez","Dinarul sârbesc","Hryvna ucraineană","Dirhamul Emiratelor","Kuna croată","Bahtul thailandez"]
+				Image:
+					source: root.steag.get(spiner2.text,"zron.png")
+					y: self.parent.y + self.parent.width*0.02
+            		x: self.parent.width + self.parent.width*0.4
+            		allow_stretch: False
+            		size_hint:(None,None)
+            		size: spiner2.width/6,spiner2.height  
+            	Image:	 
+	    			source: "drop.png"
+					y: self.parent.y*1.04
+	        		x: self.parent.x
+	        		allow_stretch: False
+	        		size_hint:(None,None)
+	        		size: spiner2.width*1.8,spiner2.height/7                   		
+    	GridLayout:
+        	cols:3
+        	rows:1 
+        	size_hint: 1,0.1
+    		pos_hint: {'x': 0, 'y': 0.75}
+    		padding:5
+			spacing:5        	           		
+			TextInput1:
+				id:input33
+				height: self.minimum_height
+				foreground_color: 1,0,0,1
+				size_hint: 0.45, 1
+				text_size: self.size     
+        		halign: 'center'
+        		valign: "bottom"
+				text:"1"
+				background_color: "FDFFD6"
+				haling: "center"
+				line_anim: False
+				mode: 'fill'
+				fill_color: 1,1,1,0
+				on_text: root.valuta(spiner1.text,input33.text)	
+				multiline: False
+				input_type:"number"
+				input_filter:"float"
+
+			Buttonn:
+				size_hint: 0.1, 1
+				text:"< - >"
+				color: 0,0,0,1
+				background_normal : ''
+				on_press: root.switchunit()	
+				background_color: "0488D8" 	
+				
+          			
+			TextInput1:
+				id:input34
+				disabled: True
+				size_hint: 0.45, 1
+				text: root.valori[10]
+				text_size: self.size  
+				disabled_foreground_color:  "000000" 
+        		halign: 'center'
+        		valign: "middle"
+        		background_normal : ''
+				background_color: "FDFFD6"
+				color: 0,0,0,1
+				input_type:"number"
+				input_filter:"float"				
+				
+		Label:
+			id: labeltitlu2
+			text:f"Curs Valutar {root.day} {root.dictmonth[root.month]} {root.year}"
+			color: 0,0,1,1
+			size_hint: 1,0.05
+    		pos_hint: {'x': 0, 'y': 0.7}
+        RV:		         	
+        	size_hint: 1,0.48
+    		pos_hint: {'x': 0, 'y': 0.2}
+    		bar_width: 30
+    		bar_color: 1/255,159/255,1,1	
+    		bar_inactive_color: 1/255,159/255,1,1  
+        	id: rvsc				
+        GridLayout:
+        	cols: 1
+        	id:gridmenu
+        	size_hint: 1,0.22
+    		pos_hint: {'x': 0, 'y': 0.0}	
+
+	            
+    	
+
+<Cursarhiva>
+	name: 'cursbnractual'
+    size_hint: 1,1
+    pos_hint: {'x': 0, 'y': 0}   
+    BoxLayout:
+    	size_hint: 1, 0.88
+    	pos_hint: {'x': 0, 'y': 0}
+        orientation: "vertical"
+        GridLayout:
+        	size_hint: 1,0.1
+        	pos_hint: {'x': 0, 'y': 0.9}
+        	cols:2
+        	rows: 1
+	        Buttonn:
+	            on_press: root.backtomenu()
+	            size_hint: 0.2,1
+    			pos_hint: {'x': 0, 'y': 0}	            
+	            text:"<<<"    
+	            background_normal : ''  
+	            background_color: "019FFF"
+	        Label:
+	            text: "Curs Valutar arhivă - Grafice"
+	            size_hint: 0.8,1
+    			pos_hint: {'x': 0.2, 'y': 0}
+    			text_size: self.size
+	            halign: "left"
+	            valign: "middle"
+    			background_normal : ''
+			    canvas.before:
+			        Color:
+			            rgba: 1/255,159/255,1,1
+			        Rectangle:
+			            size: self.size
+			            pos: self.pos
+        GridLayout:
+        	cols:3
+        	size_hint: (1,0.1)
+        	pos_hint: {'x': 0, 'y': 0.8}
+	        CSpinner:
+	        	size_hint: 0.2,1
+	        	text:root.year
+	        	background_color: 0, 43/255, 127/255, 1
+	        	background_normal : ''
+	        	color: 1,1,1,1
+	        	id:spineran
+	        	values: list(str(x) for x in range(int(root.year),2005,-1))
+	        	on_text:root.getarhivacurs(spinerzi.text,root.arhivaluni[spinerluna.text],spineran.text,root.dictarhcurs[spinerarhiva.text]) 
+	    		Image:
+	    			source: "drop.png"
+					y: self.parent.y*1.05
+	        		x: self.parent.x
+	        		allow_stretch: False
+	        		size_hint:(None,None)
+	        		size: spineran.width*1.7,spineran.height/7	        	
+	        CSpinner:
+	        	size_hint: 0.3,1
+	        	text: root.dictmonth[root.month]
+	        	background_color: 252/255, 209/255, 22/255, 1
+	        	background_normal : ''
+	        	color: 1,1,1,1	        	
+	        	id:spinerluna
+	        	values:root.listaluni
+	        	on_text:root.getarhivacurs(spinerzi.text,root.arhivaluni[spinerluna.text],spineran.text,root.dictarhcurs[spinerarhiva.text])
+	    		Image:
+	    			source: "drop.png"
+					y: self.parent.y*1.05
+	        		x: self.parent.x
+	        		allow_stretch: False
+	        		size_hint:(None,None)
+	        		size: spinerluna.width*1.8,spinerluna.height/7	        	
+	        CSpinner:  
+	        	size_hint: 0.2,1
+	        	text: root.day
+	        	background_color: 206/255, 17/255, 38/255, 1
+	        	background_normal : ''
+	        	color: 1,1,1,1	        	
+	        	id:spinerzi
+	        	values: root.listazile
+	        	on_text:root.getarhivacurs(spinerzi.text,root.arhivaluni[spinerluna.text],spineran.text,root.dictarhcurs[spinerarhiva.text])
+	        	Image:
+	    			source: "drop.png"
+					y: self.parent.y *1.05
+	        		x: self.parent.x
+	        		allow_stretch: False
+	        		size_hint:(None,None)
+	        		size: spinerzi.width*1.7,spinerzi.height/7	        	
+
+	    Label:
+	    	text:"Convertor Valutar "+ spinerzi.text +" "+spinerluna.text +" "+spineran.text
+	    	color: 0,0,1,1
+	    	size_hint: 1,0.05
+        	pos_hint: {'x': 0, 'y': 0.75}
+
+    	GridLayout:
+        	cols:2
+        	rows:1
+        	size_hint: 1,0.1
+        	pos_hint: {'x': 0, 'y': 0.65}
+    			
+        	padding:5
+			spacing:5
+			CSpinner:
+				size_hint: 0.5, 1
+				pos_hint: {'x': 0, 'y': 0}
+				background_color: "FFFFFF"
+	        	background_normal : ''
+
+	        	text_size: self.size     
+        		halign: 'center'
+        		valign: "bottom"
+				id: spinerconv1
+				text: "Euro"
+				values: ["Leu românesc","Euro","Dolarul american","Lira sterlină","Francul elveţian","Gramul de aur","Forint maghiar","Yen japonez","Leul moldovenesc","Coroana norvegiană","Zlotul polonez","Coroana suedeză","Noua lira turcească","DST","Rubla rusească","Leva bulgarească","Dolarul australian","Dolarul canadian","Coroana cehă","Coroana daneză","Lira egipteană","Randul sud-african","Realul brazilian","Renminbi-ul chinezesc","Rupia indiană","Won sud-corean","Peso-ul mexican","Dolarul neo-zeelandez","Dinarul sârbesc","Hryvna ucraineană","Dirhamul Emiratelor","Kuna croată","Bahtul thailandez"]
+				on_text: root.getarhivacurs(spinerzi.text,root.arhivaluni[spinerluna.text],spineran.text,root.dictarhcurs[spinerarhiva.text])
+				Image:
+					source: root.steag.get(spinerconv1.text,"zron.png")
+					y: self.parent.y + self.parent.width*0.02
+            		x: self.parent.x + root.width/4-(spinerconv1.width/6/2)
+            		allow_stretch: True
+            		size_hint:(None,None)
+            		size: spinerconv1.width/6,spinerconv1.height
+	        	Image:
+	    			source: "drop.png"
+					y: self.parent.y*1.07
+	        		x: self.parent.x
+	        		allow_stretch: False
+	        		size_hint:(None,None)
+	        		size: spinerconv1.width*1.8,spinerconv1.height/7            		
+			CSpinner:
+				id:spinerconv2
+				text_size: self.size     
+        		halign: 'center'
+        		valign: "bottom"
+				size_hint: 0.5, 1
+				pos_hint: {'x': 0, 'y': 0.5}
+	        	background_color: "FFFFFF"
+	        	background_normal : ''				
+				text: "Leu românesc"
+				values: ["Leu românesc","Euro","Dolarul american","Lira sterlină","Francul elveţian","Gramul de aur","Forint maghiar","Yen japonez","Leul moldovenesc","Coroana norvegiană","Zlotul polonez","Coroana suedeză","Noua lira turcească","DST","Rubla rusească","Leva bulgarească","Dolarul australian","Dolarul canadian","Coroana cehă","Coroana daneză","Lira egipteană","Randul sud-african","Realul brazilian","Renminbi-ul chinezesc","Rupia indiană","Won sud-corean","Peso-ul mexican","Dolarul neo-zeelandez","Dinarul sârbesc","Hryvna ucraineană","Dirhamul Emiratelor","Kuna croată","Bahtul thailandez"]
+				on_text: root.getarhivacurs(spinerzi.text,root.arhivaluni[spinerluna.text],spineran.text,root.dictarhcurs[spinerarhiva.text])
+				Image:
+					source: root.steag.get(spinerconv2.text,"zron.png")
+					y: self.parent.y + self.parent.width*0.02
+            		x: self.parent.width + self.parent.width*0.4
+            		allow_stretch: False
+            		size_hint:(None,None)
+            		size: spinerconv2.width/6,spinerconv2.height  
+	        	Image:
+	    			source: "drop.png"
+					y: self.parent.y*1.07
+	        		x: self.parent.x
+	        		allow_stretch: False
+	        		size_hint:(None,None)
+	        		size: spinerconv2.width*1.8,spinerconv2.height/7 
+    	GridLayout:
+        	cols:3
+        	rows:1 
+        	size_hint: 1,0.075
+        	pos_hint: {'x': 0, 'y': 0.575}
+    		padding:5
+			spacing:5        	           		
+			TextInput1:
+				id:inputconv33
+				height: self.minimum_height
+				foreground_color: 1,0,0,1
+				size_hint: 0.45, 1
+				text_size: self.size     
+        		halign: 'center'
+        		valign: "bottom"
+				text:"1"
+				background_color: "FDFFD6"
+				haling: "center"
+				line_anim: False
+				text_validate_unfocus: False
+				mode: 'fill'
+				fill_color: 1,1,1,0
+				on_text: root.valutar()	
+				multiline: False
+				input_type:"number"
+				input_filter:"float"
+
+			Buttonn:
+				size_hint: 0.1, 1
+				text:"< - >"
+				color: 0,0,0,1
+				background_normal : ''
+				on_press: root.switchunit()	
+				background_color: 1,1,1,1	
+          			
+			TextInput1:
+				id:inputconv34
+				disabled: True
+				size_hint: 0.45, 1
+				text: root.valori[10]
+				text_size: self.size  
+				disabled_foreground_color:  "000000" 
+        		halign: 'center'
+        		valign: "middle"
+        		background_normal : ''
+				background_color: "FDFFD6"
+				color: 0,0,0,1
+				input_type:"number"
+				input_filter:"float"
+
+        GridLayout:
+        	cols:1
+        	size_hint: 1,0.2
+        	pos_hint: {'x': 0, 'y': 0.375} 
+
+        	GridLayout:
+            	cols:2
+            	rows:1
+				CSpinner:
+					id: spinerarhiva
+					text_size: self.size     
+	        		halign: 'center'
+	        		valign: "bottom"
+					background_normal : ''
+					background_color: "EFFFFE"
+					text: root.listadenumire[10]
+					values: ["Euro","Dolarul american","Lira sterlină","Francul elveţian","Gramul de aur","Forint maghiar","Yen japonez","Leul moldovenesc","Coroana norvegiană","Zlotul polonez","Coroana suedeză","Noua lira turcească","DST","Rubla rusească","Leva bulgarească","Dolarul australian","Dolarul canadian","Coroana cehă","Coroana daneză","Lira egipteană","Randul sud-african","Realul brazilian","Renminbi-ul chinezesc","Rupia indiană","Won sud-corean","Peso-ul mexican","Dolarul neo-zeelandez","Dinarul sârbesc","Hryvna ucraineană","Dirhamul Emiratelor","Kuna croată","Bahtul thailandez"]
+					on_text:root.getarhivacurs(spinerzi.text,root.arhivaluni[spinerluna.text],spineran.text,root.dictarhcurs[spinerarhiva.text])
+					Image:
+						source: root.steag.get(spinerarhiva.text,"zron.png")
+						y: self.parent.y + 10
+	            		x: self.parent.x + root.width/4-(spinerarhiva.width/7/2)
+	            		allow_stretch: False
+	            		size_hint:(None,None)
+	            		size: spinerarhiva.width/7,spinerarhiva.height
+		        	Image:
+		    			source: "drop.png"
+						y: self.parent.y*1.09
+		        		x: 50
+		        		allow_stretch: False
+		        		size_hint:(None,None)
+		        		size: spinerarhiva.width*1.7,spinerarhiva.height/7		            		
+				Labell:
+					id:labelarh
+					text: root.valori[10]
+					color: 0,0,0,1
+    		CSpinner:
+    			id:spinergrafluna
+    			text:"Perioadă Grafic "+spinerarhiva.text
+				background_color: "0488D8"
+        		background_normal : ''
+        		color: 1,1,1,1	
+        		values:["1 luna", "3 luni","6 luni","1 an","5 ani","Total"]
+        		on_text: root.plotgraf()
+        		
+        		Image:
+	    			source: "drop.png"
+					y: self.parent.y*1.11
+	        		x: 5
+	        		allow_stretch: False
+	        		size_hint:(None,None)
+	        		size: spinergrafluna.width*1.8,spinergrafluna.height/7 
+
+		GridLayout:
+            size_hint: 1,0.375
+            pos_hint: {'x': 0, 'y': 0}
+			cols:1
+			Label:
+				id:labeleroare
+				text:""
+				color: 1,0,0,1
+				text_size: self.width, None
+    			size_hint: 1, None
+    			height: self.texture_size[1]
+    			markup: True
+<Info>	
+	name: 'info'
+    size_hint: 1,1
+    pos_hint: {'x': 0, 'y': 0}
+   
+    BoxLayout:
+        orientation: "vertical"
+        size_hint: 1, 0.09
+        pos_hint: {'x': 0, 'y': 0.79}
+        GridLayout:
+        	size_hint: 1,0.2
+        	cols:2
+        	rows: 1
+	        Buttonn:
+	            on_press: root.backtomenu()
+	            size_hint: 0.2,1
+    			pos_hint: {'x': 0, 'y': 0}	            
+	            text:"<<<"    
+	            background_normal : ''  
+	            background_color: "019FFF"
+	        Label:
+	            text: "Info"
+	            size_hint: 1,1
+	            text_size: self.size
+	            halign: "left"
+	            valign: "middle"
+    			pos_hint: {'x': 0, 'y': 0}
+    			background_normal : ''
+			    canvas.before:
+			        Color:
+			            rgba: 1/255,159/255,1,1
+			        Rectangle:
+			            size: self.size
+			            pos: self.pos
+
+	BoxLayout:
+		padding: 20
+		spacing: 20
+		orientation: "vertical"
+		size_hint: 1, 0.45
+		pos_hint: {'x': 0, 'y': 0.25}		
+		Label:
+			color: 0,0,0,1
+			text:"Datele se actualizează la deschiderea aplicației sau prin apăsarea butonului 'Actualizare date'.\nCursul BNR este comunicat de către Bancă Națională a României în fiecare zi bancară, în jurul orei 13:00. Acest curs este valabil pentru ziua următoare,implicit pentru toate tranzacțiile ce urmează a fi făcute în ziua următoare.De exemplu, cursul BNR valabil la data de 22 aprilie 2008 este 1 EUR = 3.5640 RON, comunicat la data de 21 aprilie 2008.Cursul valutar BNR valabil pe 19 și 20 aprilie 2008 (sâmbătă și duminică) a fost comunicat în data de 18 aprilie 2008 (vineri)."
+			text_size: self.width, None
+    		size_hint: 1, None
+    		height: self.texture_size[1]
+
+
+ 
+			
+<IRCCROBOR>	
+	name: 'irccrobor'
+    size_hint: 1,1
+    pos_hint: {'x': 0, 'y': 0}
+   
+    BoxLayout:
+        orientation: "vertical"
+        size_hint: 1, 0.08
+        pos_hint: {'x': 0, 'y': 0.8}
+        GridLayout:
+        	size_hint: 1,0.2
+        	cols:2
+        	rows: 1
+	        Buttonn:
+	            on_press: root.backtomenu()
+	            size_hint: 0.2,1
+    			pos_hint: {'x': 0, 'y': 0}	            
+	            text:"<<<"    
+	            background_normal : ''  
+	            background_color: "019FFF"
+	        Label:
+	            text: "Date IRCC - ROBOR"
+	            size_hint: 1,1
+	            text_size: self.size
+	            halign: "left"
+	            valign: "middle"
+    			pos_hint: {'x': 0, 'y': 0}
+    			background_normal : ''
+			    canvas.before:
+			        Color:
+			            rgba: 1/255,159/255,1,1
+			        Rectangle:
+			            size: self.size
+			            pos: self.pos		
+	BoxLayout:
+	    size_hint: 1,0.8
+		pos_hint: {'x': 0, 'y': 0}  
+		padding:5
+		spacing:5 
+		orientation: "vertical"
+		CSpinner:
+			id:spinerircc
+			text:"ROBOR 3 LUNI"
+			size_hint: 1, 0.1
+			pos_hint: {'x': 0, 'y':0.9}
+			background_color: "0488D8"
+        	background_normal : ''
+        	color: 1,1,1,1
+        	text_size: self.size     
+    		halign: 'center'
+    		valign: "middle"
+    		values: ["IRCC ZILNIC","IRCC 3 LUNI","ROBOR 3 LUNI","ROBOR 1 SĂPTĂMÂNĂ","ROBOR 1 LUNĂ","ROBOR 6 LUNI","ROBOR 12 LUNI", "ROBOR OVERNIGHT","ROBOR TOMORROW NEXT"]
+    		on_text: root.gotodateirccrobor()
+        	Image:
+    			source: "drop.png"
+				y: self.parent.y *1.06
+        		x: self.parent.x 
+        		allow_stretch: False
+        		size_hint:(None,None)
+        		size: spinerircc.width*1.8,spinerircc.height/7   
+    	GridLayout:
+    		cols:2
+    		size_hint: 1, 0.1
+			pos_hint: {'x': 0, 'y':0.8}
+			spacing: 5
+			padding: 5
+    		CSpinner:
+    			id: spinerlunaircc
+				text:root.dictmonth[root.month]
+				background_color: "0488D8"
+        		background_normal : ''
+        		color: 1,1,1,1    
+        		values:root.listaluni
+        		on_text: root.gotodateirccrobor()
+        		Image:
+	    			source: "drop.png"
+					y: self.parent.y*1.05
+	        		x: self.parent.x 
+	        		allow_stretch: False
+	        		size_hint:(None,None)
+	        		size: spinerlunaircc.width*1.8,spinerlunaircc.height/7  	
+    		CSpinner:
+    			id:spineranircc
+    			text:root.year
+				background_color: "0488D8"
+        		background_normal : ''
+        		color: 1,1,1,1	
+        		values:list(str(x) for x in range(int(root.year),1995,-1))
+        		on_text: root.gotodateirccrobor()
+        		Image:
+	    			source: "drop.png"
+					y: self.parent.y*1.05
+	        		x: self.parent.x 
+	        		allow_stretch: False
+	        		size_hint:(None,None)
+	        		size: spineranircc.width*1.8,spineranircc.height/7  
+    	RV:
+    		viewclass: 'Labell'
+    		size_hint: 1, 0.4
+			pos_hint: {'x': 0, 'y':0.4}
+    		id: rvirccrobor 
+    	Label:
+    		text:"Selectează perioadă grafic"
+    		color: 0,0,1,1
+    	    size_hint: 1, 0.075
+			pos_hint: {'x': 0, 'y':0.325}    		
+    	BoxLayout:
+    	    size_hint: 1, 0.075
+			pos_hint: {'x': 0, 'y':0.25}
+    		CSpinner:
+    			id:spinerirccluna
+    			text:"Perioadă Grafic"
+				background_color: "0488D8"
+        		background_normal : ''
+        		color: 1,1,1,1	
+        		values:["1 luna", "3 luni","6 luni","1 an","5 ani","Total"]
+        		on_text: root.plotgraf()
+        		
+        		Image:
+	    			source: "drop.png"
+					y: self.parent.y*1.11
+	        		x: 2 + root.width/2
+	        		allow_stretch: False
+	        		size_hint:(None,None)
+	        		size: spineranircc.width*1.8,spineranircc.height/7        		 
+
+
+    	Labell:
+    		id: labelscrir
+    		size_hint: 1.1, 0.25
+			pos_hint: {'x': 0, 'y':0.0}
+			canvas.before:
+		        Color:
+		            rgba: 1/255,159/255,1,1
+		        Rectangle:
+		            size: self.size
+            pos: self.pos
+    		text:""
+    		color:0,0,0,1
+    		
+
